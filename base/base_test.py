@@ -9,15 +9,13 @@ class BaseTest:
     Data: Data
     Links: Links
 
-    HomePage: HomePage
-    WomanCatalogPage: WomanCatalogPage
+    home_page: HomePage
+    woman_catalog_page: WomanCatalogPage
 
     @pytest.fixture(autouse=True)
     def setup(self, request, driver):
         request.cls.driver = driver
         request.cls.data = Data()
 
-        request.cls.HomePage = HomePage(driver)
-        request.cls.WomanCatalogPage = WomanCatalogPage(driver)
-
-
+        request.cls.home_page = HomePage(driver)
+        request.cls.woman_catalog_page = WomanCatalogPage(driver)
