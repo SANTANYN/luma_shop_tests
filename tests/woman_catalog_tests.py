@@ -17,7 +17,7 @@ class TestsWomanCatalog(BaseTest):
 
     def test_product_card_are_exist(self):
         self.home_page.open_home_page()
-        self.woman_catalog_page.open_bottoms_shorts()
+        self.woman_catalog_page.open_woman_bottoms_shorts()
 
         assert self.woman_catalog_page.product_cards_are_present() > 0, "No product cards found on the jackets page"
         assert self.woman_catalog_page.product_cards_are_present() == 12, "it is not a 12 product cards on the page"
