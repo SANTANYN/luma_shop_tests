@@ -2,8 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
-from locators.base_page_locators import BasePageLocators
 from base.base_page import BasePage
 import pytest
 
@@ -94,4 +92,3 @@ class WomanCatalogPage(BasePage):
 
     def product_cards_are_present(self):
         return len(self.find_page_elements(self.PRODUCT_CARDS_LIST))
-

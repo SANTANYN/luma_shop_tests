@@ -56,4 +56,3 @@ class BasePage:
 
     def forward(self):
         self.driver.forward()
-

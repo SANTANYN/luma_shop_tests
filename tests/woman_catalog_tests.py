@@ -21,4 +21,3 @@ class TestsWomanCatalog(BaseTest):
 
         assert self.woman_catalog_page.product_cards_are_present() > 0, "No product cards found on the jackets page"
         assert self.woman_catalog_page.product_cards_are_present() == 12, "it is not a 12 product cards on the page"
-
