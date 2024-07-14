@@ -17,14 +17,14 @@ class BasePage:
     def open_home_page(self):
         return self.driver.get(Links.HOME_PAGE_URL)
 
-    def find_page_element(self, args, wait):
-        WebDriverWait(self.driver, wait).until(
+    def find_page_element(self, args):
+        self.wait.until(
             EC.visibility_of_element_located(args)
         )
         return self.driver.find_element(*args)
 
-    def find_page_elements(self, args, wait):
-        WebDriverWait(self.driver, wait).until(
+    def find_page_elements(self, args):
+        self.wait.until(
             EC.presence_of_all_elements_located(*args)
         )
         return self.driver.find_elements(*args)
