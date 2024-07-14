@@ -25,7 +25,7 @@ class BasePage:
 
     def find_page_elements(self, args):
         self.wait.until(
-            EC.presence_of_all_elements_located(*args)
+            EC.presence_of_all_elements_located(args)
         )
         return self.driver.find_elements(*args)
 
