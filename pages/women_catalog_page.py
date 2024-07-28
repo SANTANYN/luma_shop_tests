@@ -23,6 +23,9 @@ class WomenCatalogPage(BasePage):
     # elements of woman catalog page
     HOT_SELLERS = (By.XPATH, "//ol[@class='product-items widget-product-grid']")
     HOT_SELLERS_CARDS_LIST = (By.XPATH, "//ol[@class='product-items widget-product-grid']/li")
+    CATEGORIES_MENU_TITLES = (By.XPATH, "//div[@class='categories-menu']/strong[@class='title']/span")
+    SUBCATEGORIES_MENU_ITEMS = (By.XPATH, "//div[@class='categories-menu']/ul/li/a")
+    CATEGORIES_ITEMS = (By.XPATH, "//ol[@class='items']/li[@class='item']/a")
 
     @staticmethod
     @allure.step("page title locator generator")
@@ -128,6 +131,27 @@ class WomenCatalogPage(BasePage):
 
     @allure.step("this method taking page title locator, it is flexiable method can get any page title")
     def get_page_title(self, title):
-        element = self.choose_page_title_locator(title)
-        element = self.find_page_element(element)
+        element_locator = self.choose_page_title_locator(title)
+        element = self.find_page_element(element_locator)
         return element
+
+    def get_categories_titles(self):
+        titles_text = self.get_elements_text_by_list(self.CATEGORIES_MENU_TITLES)
+        return titles_text
+
+    @allure.step("this method need to get text from elements")
+    def get_subcategories_items_text(self):
+        elements_text = self.get_elements_text_by_list(self.SUBCATEGORIES_MENU_ITEMS)
+        return elements_text
+
+    def get_categories_items_text(self):
+        categories_elements_text = self.get_elements_text_by_list(self.CATEGORIES_ITEMS)
+        return categories_elements_text
+
+    def get_main_categories_items_links(self):
+        main_categories_links = self.get_links_and_verify(self.CATEGORIES_ITEMS)
+        return main_categories_links
+
+    def get_subcategories_items_links(self):
+        subcategories_links = self.get_links_and_verify(self.SUBCATEGORIES_MENU_ITEMS)
+        return subcategories_links
