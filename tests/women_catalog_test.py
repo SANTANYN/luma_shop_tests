@@ -1,4 +1,3 @@
-import time
 import allure
 import pytest
 
@@ -18,6 +17,15 @@ class TestWomenCatalog(BaseTest):
         self.women_catalog_page.open_women_store_page()
         title = self.women_catalog_page.get_page_title("Women")
         assert title.text == "Women"
+
+    @allure.severity("Critical")
+    @allure.title("Navigate to women catalog page, and check that prises are present in product cards")
+    def test_navigate_to_women_page_and_check_that_prices_are_present(self):
+        self.home_page.open_home_page()
+        self.home_page.is_opened()
+        self.women_catalog_page.open_women_store_page()
+        list_of_prices = self.women_catalog_page.get_products_prices()
+        assert list_of_prices != []
 
     @allure.severity("Critical")
     @allure.title("check that in the hot sellers block product cards are present")
