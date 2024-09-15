@@ -1,1 +1,4 @@
 .env
+allure-results
+.pytest_cache
+__pycashe__

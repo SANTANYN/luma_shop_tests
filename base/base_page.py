@@ -1,6 +1,6 @@
-import time
-
 from selenium.common import TimeoutException
+import allure
+from allure_commons.types import AttachmentType
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
@@ -9,31 +9,43 @@ from config.links import Links
 
 
 class BasePage:
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10, poll_frequency=0.5)
+    def __init__(self, browser):
+        self.browser = browser
+        self.wait = WebDriverWait(browser, 10, poll_frequency=0.5)
         self.url = None
 
+    def make_screenshot(self, screen_shot_name):
+        allure.attach(
+            body=self.browser.get_screenshot_as_png,
+            name=screen_shot_name,
+            attachment_type=AttachmentType.PNG
+        )
+
     def action_chains(self):
-        return ActionChains(self.driver)
+        return ActionChains(self.browser)
 
     def open_home_page(self):
-        return self.driver.get(Links.HOME_PAGE_URL)
+        with allure.step(f"open {Links.HOME_PAGE_URL} page"):
+            self.browser.get(Links.HOME_PAGE_URL)
+
+    def is_opened(self):
+        with allure.step(f"Page {Links.HOME_PAGE_URL} is opened"):
+            self.wait.until(EC.url_to_be(Links.HOME_PAGE_URL))
 
     def find_page_element(self, args):
         self.wait.until(
             EC.visibility_of_element_located(args)
         )
-        return self.driver.find_element(*args)
+        return self.browser.find_element(*args)
 
     def find_element_without_wait(self, args):
-        return self.driver.find_element(*args)
+        return self.browser.find_element(*args)
 
     def find_page_elements(self, args):
         self.wait.until(
             EC.visibility_of_element_located(args)
         )
-        return self.driver.find_elements(*args)
+        return self.browser.find_elements(*args)
 
     def click_to_element(self, locator):
         self.wait.until(EC.visibility_of_element_located(locator)).click()
@@ -46,6 +58,24 @@ class BasePage:
     def get_text(self, locator):
         element = self.wait.until(EC.visibility_of_element_located(*locator))
         return element.text
+
+    def get_elements_text_by_list(self, args):
+        self.wait.until(
+            EC.visibility_of_element_located(args)
+        )
+        elements = self.browser.find_elements(*args)
+        texts = []
+        for element in elements:
+            text = element.text.strip()
+            if not text:
+                text = self.browser.execute_script("return arguments[0].textContent;", element).strip()
+            texts.append(text)
+        return texts
+
+    def get_links_and_verify(self, locator):
+        elements = self.find_page_elements(locator)
+        links = [element.get_attribute('href') for element in elements]
+        return links
 
     def elements_is_present(self, elements):
         return self.wait.until(EC.presence_of_all_elements_located(elements))
@@ -66,28 +96,26 @@ class BasePage:
     def scroll_page_up(self):
         self.action_chains().send_keys(Keys.PAGE_UP).perform()
 
-    # # не  скролит почему-то
-    # def scroll_page_to_the_element(self, locator):
-    #     element = self.find_page_element(locator)
-    #     self.action_chains().scroll_to_element(element)
+    # it does not scroll, im do not know why, but it is working...
+    def scroll_page_to_the_element(self, locator):
+        element = self.find_page_element(locator)
+        self.action_chains().scroll_to_element(element)
 
     def scroll_page_to_the_element_by_js(self, locator):
-        element = self.find_page_element(locator)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
-
-        # to be sure that element is present
         self.wait.until(
             EC.visibility_of_element_located(locator)
         )
+        element = self.find_page_element(locator)
+        self.browser.execute_script("arguments[0].scrollIntoView(true);", element)
 
     def get_url(self):
-        return self.driver.current_url()
+        return self.browser.current_url()
 
     def refresh(self):
-        self.driver.refresh()
+        self.browser.refresh()
 
     def back(self):
-        self.driver.back()
+        self.browser.back()
 
     def forward(self):
-        self.driver.forward()
+        self.browser.forward()
