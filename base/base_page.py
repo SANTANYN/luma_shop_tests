@@ -1,3 +1,4 @@
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.common import TimeoutException
 import allure
 from allure_commons.types import AttachmentType
@@ -9,7 +10,7 @@ from config.links import Links
 
 
 class BasePage:
-    def __init__(self, browser):
+    def __init__(self, browser: WebDriver):
         self.browser = browser
         self.wait = WebDriverWait(browser, 10, poll_frequency=0.5)
         self.url = None
