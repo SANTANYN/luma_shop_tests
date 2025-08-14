@@ -31,14 +31,7 @@ pipeline {
     post {
         always {
             dir('/var/jenkins_home/workspace/luma_shop_tests') {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'allure-results',
-                    reportFiles: 'index.html',
-                    reportName: 'Allure Report'
-                ])
+                archiveArtifacts artifacts: 'allure-results/**/*', allowEmptyArchive: true
             }
         }
     }
