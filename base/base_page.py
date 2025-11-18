@@ -98,11 +98,11 @@ class BasePage:
         self.action_chains().send_keys(Keys.PAGE_UP).perform()
 
     # it does not scroll, im do not know why, but it is working...
-    def scroll_page_to_the_element(self, locator):
+    def scroll_page_to_the_element(self, locator: tuple):
         element = self.find_page_element(locator)
         self.action_chains().scroll_to_element(element)
 
-    def scroll_page_to_the_element_by_js(self, locator):
+    def scroll_page_to_the_element_by_js(self, locator: tuple):
         self.wait.until(
             EC.visibility_of_element_located(locator)
         )
@@ -110,7 +110,7 @@ class BasePage:
         self.browser.execute_script("arguments[0].scrollIntoView(true);", element)
 
     def get_url(self):
-        return self.browser.current_url()
+        return self.browser.current_url
 
     def refresh(self):
         self.browser.refresh()

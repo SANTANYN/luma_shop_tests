@@ -30,7 +30,7 @@ class WomenCatalogPage(BasePage):
 
     @staticmethod
     @allure.step("page title locator generator")
-    def choose_page_title_locator(title):
+    def choose_page_title_locator(title: str) -> tuple:
         locator = f"//span[@class='base' and @data-ui-id='page-title-wrapper' and text()='{title}']"
         title_locator = (By.XPATH, locator)
         return title_locator
@@ -131,7 +131,7 @@ class WomenCatalogPage(BasePage):
         return len(self.find_page_elements(self.HOT_SELLERS_CARDS_LIST))
 
     @allure.step("this method taking page title locator, it is flexiable method can get any page title")
-    def get_page_title(self, title):
+    def get_page_title(self, title: str) -> tuple:
         element_locator = self.choose_page_title_locator(title)
         element = self.find_page_element(element_locator)
         return element
