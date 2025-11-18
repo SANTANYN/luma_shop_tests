@@ -98,7 +98,7 @@ class BasePage:
         self.action_chains().send_keys(Keys.PAGE_UP).perform()
 
     # it does not scroll, im do not know why, but it is working...
-    def scroll_page_to_the_element(self, locator):
+    def scroll_page_to_the_element(self, locator: tuple):
         element = self.find_page_element(locator)
         self.action_chains().scroll_to_element(element)
 
