@@ -1,4 +1,5 @@
-EN
+EN description
+
 🧪 Luma Shop Tests — Pet Project
 This is my pet project dedicated to automating tests for the Luma demo online store (previously available at https://magento.softwaretestingboard.com/).
 
@@ -97,7 +98,8 @@ This repository serves as a demonstration of my work style, my approach to build
 If you wish to see how I approach testing in real-world scenarios, this project is a good example.
 
 
-RU
+RU description
+
 🧪 Luma Shop Tests — Pet Project
 
 Это мой пет-проект по автоматизации тестирования демо-интернет-магазина Luma (ранее доступен по адресу https://magento.softwaretestingboard.com/
